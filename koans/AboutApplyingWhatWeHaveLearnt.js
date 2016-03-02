@@ -69,12 +69,19 @@ describe("About Applying What We Have Learnt", function() {
 
   it("should add all the natural numbers below 1000 that are multiples of 3 or 5 (functional)", function () {
 
-    var sum = 0;    /* try chaining range() and reduce() */
-    var validNum = _.range(1000);
-    var filtered = _.filter(validNum, function(item){return item % 3 === 0 || item % 5 === 0});
-    sum = _.reduce(filtered, function(a, b){return a+b})
-
-
+       /* try chaining range() and reduce() */
+    var sum = _.chain(1)
+          .range(1000)
+          .reduce(function(total, num){
+            if (num % 3 === 0 || num % 5 === 0){
+              total += num;
+            }
+            return total;
+          }, 0)
+          .value()
+    // var validNum = _.range(1000);
+    // var filtered = _.filter(validNum, function(item){return item % 3 === 0 || item % 5 === 0});
+    // sum = _.reduce(filtered, function(a, b){return a+b})
     expect(233168).toBe(sum);
   });
 
@@ -87,7 +94,6 @@ describe("About Applying What We Have Learnt", function() {
             ingredientCount[products[i].ingredients[j]] = (ingredientCount[products[i].ingredients[j]] || 0) + 1;
         }
     }
-
     expect(ingredientCount['mushrooms']).toBe(2);
   });
 
@@ -95,19 +101,21 @@ describe("About Applying What We Have Learnt", function() {
     var ingredientCount = { "{ingredient name}": 0 };
 
     /* chain() together map(), flatten() and reduce() */
-    // var filteredIngredients = _.filter(products, function(item){return item.ingredients});
-    // console.log(filteredIngredients)
+    ingredientCount = _.chain(products)
+                      .map(function(product){
+                        return product.ingredients;
+                      })
+                      .flatten()
+                      .reduce(function(toppingObject, ingredient){
+                        toppingObject[ingredient] = (toppingObject[ingredient] || 0) + 1;
+                        return toppingObject;
+                      }, {})
+                      .value();
 
-    expect(ingredientCount['mushrooms']).toBe(undefined);
+    expect(ingredientCount['mushrooms']).toBe(2);
   });
 
 
-  // var stooges = [{name: 'curly', age: 25}, {name: 'moe', age: 21}, {name: 'larry', age: 23}];
-  // var youngest = _.chain(stooges)
-  //   .sortBy(function(stooge){ return stooge.age; })
-  //   .map(function(stooge){ return stooge.name + ' is ' + stooge.age; })
-  //   .first()
-  //   .value();
   /*********************************************************************************/
   /* UNCOMMENT FOR EXTRA CREDIT */
   /*
