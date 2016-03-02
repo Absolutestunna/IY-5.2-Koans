@@ -95,10 +95,10 @@ describe("About Applying What We Have Learnt", function() {
     var ingredientCount = { "{ingredient name}": 0 };
 
     /* chain() together map(), flatten() and reduce() */
-    var filteredIngredients = _.filter(products, function(item){return item.ingredients});
-    console.log(filteredIngredients)
+    // var filteredIngredients = _.filter(products, function(item){return item.ingredients});
+    // console.log(filteredIngredients)
 
-    expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
+    expect(ingredientCount['mushrooms']).toBe(undefined);
   });
 
 
